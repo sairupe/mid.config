@@ -1,0 +1,11 @@
+FROM baseos:test
+
+MAINTAINER SYRIANA http://www.syriana.com
+
+VOLUME /tmp
+
+ADD 12315.jar /app/app.jar
+
+RUN sh -c 'touch /app.jar'
+
+ENTRYPOINT [ "java", "-jar", "-XX:InitialRAMPercentage=75.0", "-XX:MaxRAMPercentage=75.0", "-XX:MinRAMPercentage=75.0", "-XX:MetaspaceSize=256m", "-XX:MaxMetaspaceSize=256m", "-Dserver.port=80", "-Dfile.encoding=UTF-8", "-Duser.timezone=GMT+8", "/app/app.jar" ]
