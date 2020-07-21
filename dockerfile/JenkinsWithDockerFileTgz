@@ -1,0 +1,10 @@
+FROM jenkins/jenkins:2.245-alpine
+ENV M2_HOME=/usr/local/apache-maven-3.6.3
+ENV PATH=${PATH}:${M2_HOME}/bin
+
+user root
+COPY docker-latest.tgz /tmp/docker-latest.tgz
+RUN tar xvz /tmp/docker-latest.tgz -C /tmp/ && mv /tmp/docker/docker /usr/bin/docker
+user jenkins
+
+RUN groupadd docke
