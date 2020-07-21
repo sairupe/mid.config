@@ -1,0 +1,8 @@
+FROM jenkins/jenkins:2.245-alpine
+ENV M2_HOME=/usr/local/apache-maven-3.6.3
+ENV PATH=${PATH}:${M2_HOME}/bin
+
+USER root
+COPY docker-engine-19.03.11-r0.apk /tmp/12315.apk
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories
+RUN apk add --allow-untrusted /tmp/12315.apk
