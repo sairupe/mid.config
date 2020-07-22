@@ -2,6 +2,8 @@ pipeline {
     agent any
     
     environment {
+        // SRC_DIR
+        src_dir = 'sso.oidc.api'
         // WORK DIR
         workspace_dir = '/var/jenkins_home/workspace/sso.oidc.api'
         // GITHUB_LINK
@@ -24,8 +26,12 @@ pipeline {
             steps {
                 echo ' ---------------------- FETCH GIT START ----------------------'
                 sh 'cd ${workspace_dir}'
+                sh 'rm -fr ./*'
                 sh 'git clone ${github_https}'
-                sh 'ls'
+                sh 'pwd'
+                sh 'cd /var/jenkins_home/workspace/sso.oidc.api/sso_oidc_api'
+                sh 'pwd'
+                sh 'mvn clean package -DskipTests=true'
                 echo ' ---------------------- FETCH GIT END ----------------------'
             }
         }
