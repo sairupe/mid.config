@@ -1,0 +1,51 @@
+pipeline {
+    agent any
+    
+    environment {
+        // WORK DIR
+        workspace_dir = '/var/jenkins_home/workspace/sso.oidc.api'
+        // GITHUB_LINK
+        github_ssh = 'git@github.com:sairupe/sso.oidc.api.git'
+        github_https = 'https://github.com/sairupe/sso.oidc.api.git'
+    }
+
+    stages {
+        stage('TOOLS INFO') {
+            steps {
+                echo ' ---------------------- TOOLS INFO START ----------------------'
+                sh 'git --version'
+                sh 'mvn -version'
+                sh 'java -version'
+                sh 'docker info'
+                echo ' ---------------------- TOOLS INFO END ----------------------'
+            }
+        }
+        stage('FETCH GIT') {
+            steps {
+                echo ' ---------------------- FETCH GIT START ----------------------'
+                sh 'cd ${workspace_dir}'
+                sh 'git clone ${github_https}'
+                sh 'ls'
+                echo ' ---------------------- FETCH GIT END ----------------------'
+            }
+        }
+        stage('MAVEN PACKAGE') {
+            steps {
+                echo '---------------------- MAVEN PACKAGE START ----------------------'
+                echo '---------------------- MAVEN PACKAGE END ----------------------'
+            }
+        }
+        stage('DOCKER IMAGE BUILD AND PUSH') {
+            steps {
+                echo '---------------------- DOCKER IMAGE BUILD AND PUSH START ----------------------'
+                echo '---------------------- DOCKER IMAGE BUILD AND PUSH END ----------------------'
+            }
+        }
+        stage('CLEAN') {
+            steps {
+                echo '---------------------- CLEAN START ----------------------'
+                echo '---------------------- CLEAN END ----------------------'
+            }
+        }
+    }
+}
