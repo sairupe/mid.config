@@ -25,13 +25,10 @@ pipeline {
         stage('FETCH GIT') {
             steps {
                 echo ' ---------------------- FETCH GIT START ----------------------'
-                sh 'cd ${workspace_dir}'
-                sh 'rm -fr ./*'
+                sh 'rm -fr *'
                 sh 'git clone ${github_https}'
-                sh 'pwd'
-                sh 'cd /var/jenkins_home/workspace/sso.oidc.api/sso_oidc_api'
-                sh 'pwd'
-                sh 'mvn clean package -DskipTests=true'
+                sh 'cd sso.oidc.api'
+                sh 'mvn -f ./sso.oidc.api/pom.xml clean package -DskipTests=true'
                 echo ' ---------------------- FETCH GIT END ----------------------'
             }
         }
