@@ -4,8 +4,6 @@ pipeline {
     environment {
         // SRC_DIR
         src_dir = 'sso.oidc.api'
-        // WORK DIR
-        workspace_dir = '/var/jenkins_home/workspace/sso.oidc.api'
         // GITHUB_LINK
         github_ssh = 'git@github.com:sairupe/sso.oidc.api.git'
         github_https = 'https://github.com/sairupe/sso.oidc.api.git'
@@ -25,10 +23,11 @@ pipeline {
         stage('FETCH GIT') {
             steps {
                 echo ' ---------------------- FETCH GIT START ----------------------'
-                sh 'rm -fr *'
-                sh 'git clone ${github_https}'
-                sh 'cd sso.oidc.api'
-                sh 'mvn -f ./sso.oidc.api/pom.xml clean package -DskipTests=true'
+                //sh 'rm -fr *'
+                //sh 'git clone ${github_https}'
+                sh 'mvn -f ./${src_dir}/pom.xml clean package -DskipTests=true'
+                sh "ls ${src_dir}/target/*.jar | xargs  -I  '{}'  mv  {}  app.jar" // app.jar in WORKSPACE
+                sh 'docker build -t 12315:test -f /var/jenkins_home/dockerfile/SrvDockerfile .'
                 echo ' ---------------------- FETCH GIT END ----------------------'
             }
         }
