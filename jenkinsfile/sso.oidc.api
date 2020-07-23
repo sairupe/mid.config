@@ -32,6 +32,14 @@ pipeline {
                 sh "ls *.jar | sed 's/.jar//g' | cut -d '-' -f3 > deploy.txt"
                 // sh "ls ${src_dir}/target/*.jar | xargs  -I  '{}'  mv  {}  app.jar" // app.jar in WORKSPACE
                 sh "ls *.jar | xargs  -I  '{}'  mv  {}  app.jar" // app.jar in WORKSPACE
+                
+                //TODO read version and deploy build img tag
+                 script{
+                    def app_key = sh(returnStdout: true, script: 'cat app_key.txt')
+                    echo app_key
+                    sh 'ls -al'
+                }
+                
                 sh 'docker build -t 12315:test -f /var/jenkins_home/dockerfile/SrvDockerfile .'
                 echo ' ---------------------- FETCH GIT END ----------------------'
             }
@@ -51,11 +59,8 @@ pipeline {
         stage('CLEAN') {
             steps {
                 echo '---------------------- CLEAN START ----------------------'
-                sh 'cat app_key.txt'
-                sh 'cat version.txt'
-                sh 'cat deploy.txt'
-                sh 'rm -f ./*.txt'
                 sh 'rm -f ./*.jar'
+                sh 'rm -f ./*.txt'
                 echo '---------------------- CLEAN END ----------------------'
             }
         }
