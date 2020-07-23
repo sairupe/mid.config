@@ -1,10 +1,10 @@
-FROM baseos:test
+FROM syrianazh/base_alpine_jdk8:0.0.1
 
 MAINTAINER SYRIANA http://www.syriana.com
 
 VOLUME /tmp
 
-ADD 12315.jar /app/app.jar
+ADD app.jar /app/app.jar
 
 RUN sh -c 'touch /app.jar'
 
