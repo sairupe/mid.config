@@ -2,6 +2,8 @@ pipeline {
     agent any
     
     environment {
+        // HUB PREFIX
+        hub_pre = 'syrianazh/'
         // SRC_DIR
         src_dir = 'sso.oidc.api'
         // GITHUB_LINK
@@ -48,19 +50,20 @@ pipeline {
 				// 移动JAR文件到工作目录下
 				sh 'mv ${src_dir}/target/*.jar ./'
                 script{
-                    app_key = sh(returnStdout: true, script: "ls *.jar | sed 's/.jar//g' | cut -d '-' -f1")
-                    tag = sh(returnStdout: true, script: "ls *.jar | sed 's/.jar//g' | cut -d '-' -f2")
-                    version = sh(returnStdout: true, script: "ls *.jar | sed 's/.jar//g' | cut -d '-' -f3")
+                    APP_KEY = sh(returnStdout: true, script: "ls *.jar | sed 's/.jar//g' | cut -d '-' -f1").trim()
+                    TAG = sh(returnStdout: true, script: "ls *.jar | sed 's/.jar//g' | cut -d '-' -f2").trim()
+                    VERSION = sh(returnStdout: true, script: "ls *.jar | sed 's/.jar//g' | cut -d '-' -f3").trim()
                 }
-                echo "---------- JAR info START ---------"
-                echo "APP_KEY : ${app_key}"
-                echo "TAG : ${tag}"
-                echo "VERSTION : ${version}"
-                echo "--------- JAR info END ----"
+                echo "---------- TAG info START ---------"
+                echo "APP_KEY : ${APP_KEY}"
+                echo "TAG : ${TAG}"
+                echo "VERSION : ${VERSION}"
+
+                echo "-------------------------------- TAG info--------------------------------"
                 
-                sh "ls *.jar | xargs  -I  '{}'  mv  {}  app.jar" // app.jar in WORKSPACE
-                sh 'docker build -t 12315:test -f /var/jenkins_home/dockerfile/SrvDockerfile .'
-				
+                sh "ls *.jar | xargs  -I  '{}'  mv  {}  app.jar"
+                sh "docker build -t ${hub_pre}${APP_KEY}:${TAG}-${VERSION} -f /var/jenkins_home/dockerfile/SrvDockerfile ."
+                
                 echo '-------------------------------- DOCKER IMAGE BUILD AND PUSH --------------------------------'
             }
         }
