@@ -27,19 +27,20 @@ pipeline {
                 //sh 'git clone ${github_https}'
                 sh 'mvn -f ./${src_dir}/pom.xml clean package -DskipTests=true'
                 sh 'mv ${src_dir}/target/*.jar ./'
-                sh "ls *.jar | sed 's/.jar//g' | cut -d '-' -f1 > app_key.txt"
-                sh "ls *.jar | sed 's/.jar//g' | cut -d '-' -f2 > version.txt"
-                sh "ls *.jar | sed 's/.jar//g' | cut -d '-' -f3 > deploy.txt"
-                // sh "ls ${src_dir}/target/*.jar | xargs  -I  '{}'  mv  {}  app.jar" // app.jar in WORKSPACE
-                sh "ls *.jar | xargs  -I  '{}'  mv  {}  app.jar" // app.jar in WORKSPACE
-                
-                //TODO read version and deploy build img tag
-                 script{
-                    def app_key = sh(returnStdout: true, script: 'cat app_key.txt')
-                    echo app_key
-                    sh 'ls -al'
+
+                script{
+                    //app_key = sh(returnStdout: true, script: 'cat app_key.txt')
+                    app_key = sh(returnStdout: true, script: "ls *.jar | sed 's/.jar//g' | cut -d '-' -f1")
+                    tag = sh(returnStdout: true, script: "ls *.jar | sed 's/.jar//g' | cut -d '-' -f2")
+                    version = sh(returnStdout: true, script: "ls *.jar | sed 's/.jar//g' | cut -d '-' -f3")
                 }
+                echo "----- print jar info START ----"
+                echo "${app_key}"
+                echo "${tag}"
+                echo "${version}"
+                echo "----- print jar info END ----"
                 
+                sh "ls *.jar | xargs  -I  '{}'  mv  {}  app.jar" // app.jar in WORKSPACE
                 sh 'docker build -t 12315:test -f /var/jenkins_home/dockerfile/SrvDockerfile .'
                 echo ' ---------------------- FETCH GIT END ----------------------'
             }
