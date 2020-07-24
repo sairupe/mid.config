@@ -53,16 +53,27 @@ pipeline {
                     APP_KEY = sh(returnStdout: true, script: "ls *.jar | sed 's/.jar//g' | cut -d '-' -f1").trim()
                     TAG = sh(returnStdout: true, script: "ls *.jar | sed 's/.jar//g' | cut -d '-' -f2").trim()
                     VERSION = sh(returnStdout: true, script: "ls *.jar | sed 's/.jar//g' | cut -d '-' -f3").trim()
+                    EXIST_IMG_ID = sh(returnStdout: true, script: "docker images | grep ${APP_KEY} | grep ${VERSION} | awk '{print \$3}'").trim()
+                    EXIST_CONTAINER_ID = sh(returnStdout: true, script: "docker ps | grep ${APP_KEY} | grep ${VERSION} | awk '{print \$1}'").trim()
+                    
                 }
                 echo "---------- TAG info START ---------"
                 echo "APP_KEY : ${APP_KEY}"
                 echo "TAG : ${TAG}"
                 echo "VERSION : ${VERSION}"
+                echo "EXIST_IMG_ID : ${EXIST_IMG_ID}"
 
                 echo "-------------------------------- TAG info--------------------------------"
-                
                 sh "ls *.jar | xargs  -I  '{}'  mv  {}  app.jar"
                 sh "docker build -t ${hub_pre}${APP_KEY}:${TAG}-${VERSION} -f /var/jenkins_home/dockerfile/SrvDockerfile ."
+                script {
+                    if (EXIST_CONTAINER_ID != null && EXIST_CONTAINER_ID != '') {
+                        sh "docker stop ${EXIST_CONTAINER_ID}"
+                    }
+                    if (EXIST_IMG_ID != null && EXIST_IMG_ID != '') {
+                        sh "docker rmi ${EXIST_IMG_ID} -f"
+                    }
+                }
                 
                 echo '-------------------------------- DOCKER IMAGE BUILD AND PUSH --------------------------------'
             }
