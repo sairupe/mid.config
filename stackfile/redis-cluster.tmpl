@@ -1,0 +1,15 @@
+port ${PORT}
+
+cluster-enabled yes
+
+cluster-config-file nodes.conf
+
+cluster-node-timeout 5000
+
+cluster-announce-ip 172.16.0.11
+
+cluster-announce-port ${PORT}
+
+cluster-announce-bus-port 1${PORT}
+
+appendonly yes

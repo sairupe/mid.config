@@ -1,0 +1,39 @@
+version: "3"
+services:
+  redis01:
+    image: redis:5.0.9-alpine3.11
+    volumes:
+      - /data/redis01_data:/data
+      - /data/redis01_config:/conf
+    command: redis-server --appendonly yes --cluster-enabled yes --cluster-config-file /conf/nodes.conf 
+    ports:
+      - "7001:6379"
+      - "17001:16379"
+    networks:
+      - redis-net
+
+  redis02:
+    image: redis:5.0.9-alpine3.11
+    volumes:
+      - /data/redis02_data:/data
+      - /data/redis02_config:/conf
+    command: redis-server --appendonly yes --cluster-enabled yes --cluster-config-file /conf/nodes.conf
+    ports:
+      - "7002:6379"
+      - "17002:16379"
+    networks:
+      - redis-net
+
+  redis03:
+    image: redis:5.0.9-alpine3.11
+    volumes:
+      - /data/redis03_data:/data
+      - /data/redis03_config:/conf
+    command: redis-server --appendonly yes --cluster-enabled yes --cluster-config-file /conf/nodes.conf
+    ports:
+      - "7003:6379"
+      - "17003:16379"
+    networks:
+      - redis-net
+networks:
+  redis-net:
