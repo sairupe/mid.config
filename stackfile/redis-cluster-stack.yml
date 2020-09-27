@@ -13,8 +13,8 @@ services:
       - "7001:7001"
       - "17001:17001"
     networks:
-      - redis-net
-
+      redis-net:
+        ipv4_address: 10.0.1.71
   redis02:
     image: redis:5.0.9-alpine3.11
     volumes:
@@ -27,8 +27,8 @@ services:
       - "7002:7002"
       - "17002:17002"
     networks:
-      - redis-net
-
+      redis-net:
+        ipv4_address: 10.0.1.72
   redis03:
     image: redis:5.0.9-alpine3.11
     volumes:
@@ -41,7 +41,8 @@ services:
       - "7003:7003"
       - "17003:17003"
     networks:
-      - redis-net
+      redis-net:
+        ipv4_address: 10.0.1.73  
 networks:
   redis-net:
     external: true
