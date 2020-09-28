@@ -13,8 +13,7 @@ services:
       - "7001:7001"
       - "17001:17001"
     networks:
-      redis-net:
-        ipv4_address: 10.0.1.71
+      - redis-net
   redis02:
     image: redis:5.0.9-alpine3.11
     volumes:
@@ -27,8 +26,7 @@ services:
       - "7002:7002"
       - "17002:17002"
     networks:
-      redis-net:
-        ipv4_address: 10.0.1.72
+      - redis-net
   redis03:
     image: redis:5.0.9-alpine3.11
     volumes:
@@ -41,8 +39,46 @@ services:
       - "7003:7003"
       - "17003:17003"
     networks:
-      redis-net:
-        ipv4_address: 10.0.1.73  
+      - redis-net
+  redis04:
+    image: redis:5.0.9-alpine3.11
+    volumes:
+      - /data/redis7004/data:/data
+      - /data/redis7004/conf/redis7004.conf:/redis/redis.conf
+    command: "redis-server /redis/redis.conf"
+    sysctls: 
+     - net.core.somaxconn=1024
+    ports:
+      - "7004:7004"
+      - "17004:17004"
+    networks:
+      - redis-net
+  redis05:
+    image: redis:5.0.9-alpine3.11
+    volumes:
+      - /data/redis7005/data:/data
+      - /data/redis7005/conf/redis7005.conf:/redis/redis.conf
+    command: "redis-server /redis/redis.conf"
+    sysctls: 
+     - net.core.somaxconn=1024
+    ports:
+      - "7005:7005"
+      - "17005:17005"
+    networks:
+      - redis-net
+  redis06:
+    image: redis:5.0.9-alpine3.11
+    volumes:
+      - /data/redis7006/data:/data
+      - /data/redis7006/conf/redis7006.conf:/redis/redis.conf
+    command: "redis-server /redis/redis.conf"
+    sysctls: 
+     - net.core.somaxconn=1024
+    ports:
+      - "7006:7006"
+      - "17006:17006"
+    networks:
+      - redis-net
 networks:
   redis-net:
     external: true
