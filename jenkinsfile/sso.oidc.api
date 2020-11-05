@@ -27,10 +27,14 @@ pipeline {
         stage('FETCH GIT') {
             steps {
                 echo '-------------------------------- FETCH GIT --------------------------------'
-				
+				sh 'pwd'
                 sh 'rm -f ./*.jar'
                 //sh 'git clone ${github_https}'
-                
+                dir("${env.src_dir}") {
+                    sh "pwd"
+                    sh 'git pull'
+                    sh 'git reset --hard origin/master'
+                }
                 echo '-------------------------------- FETCH GIT --------------------------------'
             }
         }
@@ -38,7 +42,7 @@ pipeline {
             steps {
                 echo '-------------------------------- MAVEN PACKAGE --------------------------------'
 				
-				sh 'mvn -f ./${src_dir}/pom.xml clean package -DskipTests=true'
+				sh 'mvn -f ./${src_dir}/pom.xml clean compile install package -DskipTests=true'
 				
                 echo '-------------------------------- MAVEN PACKAGE --------------------------------'
             }
@@ -74,6 +78,8 @@ pipeline {
                         sh "docker rmi ${EXIST_IMG_ID} -f"
                     }
                 }
+                //sh "docker login"
+                //sh "docker push ${hub_pre}${APP_KEY}:${TAG}-${VERSION}"
                 
                 echo '-------------------------------- DOCKER IMAGE BUILD AND PUSH --------------------------------'
             }
