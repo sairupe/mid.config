@@ -2,16 +2,38 @@ _format_version: "2.1"
 _transform: true
 
 services:
-- name: my-service
-  url: https://example.com
-  plugins:
-  - name: key-auth
+- name: sso.oidc.api
+  host: apiupstream
   routes:
-  - name: my-route
+  - name: sso.oidc.api_route
+    hosts: 
+    - lemon-soda.com
     paths:
-    - /
+    - /sso.oidc.api
+    strip_path: false
+- name: sso.oidc.srv
+  host: srvupstream
+  routes:
+  - name: sso.oidc.srv_route
+    hosts: 
+    - lemon-soda.com
+    paths:
+    - /sso.oidc.srv
+    strip_path: false
+- name: test
+  url: http://www.baidu.com
+  routes:
+  - name: test_route
+    paths:
+    - /baidu
 
-consumers:
-- username: my-user
-  keyauth_credentials:
-  - key: my-key
+upstreams:
+- name: apiupstream
+  targets:
+    - target: ssooidcapi:80
+      weight: 100
+- name: srvupstream
+  targets:
+    - target: ssooidcsrv:80
+      weight: 100
+
