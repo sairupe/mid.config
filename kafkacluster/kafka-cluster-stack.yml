@@ -1,0 +1,44 @@
+version: '3.6'
+services:
+  kafka01:
+    image: wurstmeister/kafka:2.13-2.6.0
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://:9092
+      KAFKA_LISTENERS: PLAINTEXT://:9092
+      KAFKA_ZOOKEEPER_CONNECT: zoo1:2181,zoo2:2181,zoo3:2181
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /data/kafka01:/kafka
+    networks:
+      - lemon-soda
+  kafka02:
+    image: wurstmeister/kafka:2.13-2.6.0
+    ports:
+      - "9093:9092"
+    environment:
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://:9092
+      KAFKA_LISTENERS: PLAINTEXT://:9092
+      KAFKA_ZOOKEEPER_CONNECT: zoo1:2181,zoo2:2181,zoo3:2181
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /data/kafka02:/kafka
+    networks:
+      - lemon-soda
+  kafka03:
+    image: wurstmeister/kafka:2.13-2.6.0
+    ports:
+      - "9094:9092"
+    environment:
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://:9092
+      KAFKA_LISTENERS: PLAINTEXT://:9092
+      KAFKA_ZOOKEEPER_CONNECT: zoo1:2181,zoo2:2181,zoo3:2181
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /data/kafka03:/kafka
+    networks:
+      - lemon-soda
+networks:
+  lemon-soda:
+    external: true
