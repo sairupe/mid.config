@@ -3,7 +3,7 @@
 <#assign classNameLower = className?uncap_first>
 package ${basepackage}.${subpackage}.service.impl;
 
-import com.yjyz.core.models.Page;
+import com.yyzf.core.models.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 

@@ -13,6 +13,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import java.io.Serializable;
+import java.util.Date;
 
 <#include "/java_imports.include">
 @Data
@@ -23,26 +24,8 @@ public class ${className}Dto implements Serializable {
     ${column.hibernateValidatorExprssion}
     @ApiModelProperty(value = "${column.columnAlias}", notes = "${column.hibernateValidatorExprssion}")
     private ${column.simpleJavaType} ${column.columnNameLower};
-
-    </#list>
-    // start-处理日期参数查询条件
-    <#list table.columns as column>
-    <#if column.isDateTimeColumn>
-
-    /** ${column.columnAlias}字符串类型 */
-    private String ${column.columnNameLower}Str;
-
-    /** ${column.columnAlias}开始时间 */
-    private String ${column.columnNameLower}Begin;
-
-    /** ${column.columnAlias}结束时间 */
-    private String ${column.columnNameLower}End;
-
-    </#if>
-    </#list>
-    // end-处理日期参数查询条件
-        
-
+	
+    </#list>    
 }
 <#macro generateJavaColumns>
     <#list table.columns as column>

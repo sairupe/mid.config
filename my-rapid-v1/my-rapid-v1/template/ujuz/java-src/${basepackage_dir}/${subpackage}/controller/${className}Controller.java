@@ -3,8 +3,8 @@
 <#assign classNameLower = className?uncap_first>
 package ${basepackage}.${subpackage}.controller;
 
-import com.yjyz.core.models.Page;
-import com.yjyz.core.models.Result;
+import com.yyzf.core.models.Page;
+import com.yyzf.core.models.Result;
 import ${basepackage}.${subpackage}.dto.${className}Dto;
 import ${basepackage}.${subpackage}.service.I${className}Service;
 import io.swagger.annotations.Api;
