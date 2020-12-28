@@ -1,0 +1,1 @@
+用的参数 -L java -library feign 来生成controller对象和model对象，然后删除其他无用的，直接拼装OPEN FEIGN注解
