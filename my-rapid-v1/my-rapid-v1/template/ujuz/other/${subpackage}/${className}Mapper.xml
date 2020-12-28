@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<#include "/macro.include"/>
+<#assign className = table.className>
+<#assign classNameLower = className?uncap_first>
+<#macro mapperEl value>${r"#{"}${value}}</#macro>
+
+<!-- ${table.tableAlias}Mapper.xml文件 -->
+<mapper namespace="${basepackage}.${subpackage}.dao.${className}Mapper">
+
+	<!-- 行别名列名ResultMap -->
+	<resultMap id="RM${className}Mapper" type="${basepackage}.${subpackage}.entity.${className}Entity">
+        <#list table.columns as column>
+		<!-- ${column.columnAlias} -->
+        <result property="${column.columnNameLower}" column="${column.sqlName}"/>
+		</#list>
+	</resultMap>
+
+	<!-- 通用where子句 -->
+    <sql id="where">
+	<trim prefix="WHERE" prefixOverrides="AND|OR"> 
+        <#list table.columns as column>
+	       <#if column.javaType == 'Date'>
+	       <if test="${column.columnNameFirstLower}Begin != null">
+				AND ${column.sqlName} >= TO_DATE(<@mapperEl column.columnNameFirstLower+"Begin"/>, 'yyyy-MM-dd')
+		   </if>
+		   <if test="${column.columnNameFirstLower}End != null and ${column.columnNameFirstLower}End != ''">
+				AND ${column.sqlName} &lt;= TO_DATE(<@mapperEl column.columnNameFirstLower+"End"/>, 'yyyy-MM-dd')
+		   </if>
+	       <#elseif column.javaType == 'String'>
+		   <if test="${column.columnNameFirstLower} != null and ${column.columnNameFirstLower} != ''">
+			   AND ${column.sqlName} = <@mapperEl column.columnNameFirstLower/>
+		   </if>
+		   <#elseif column.javaType == 'Float'>
+		   <if test="${column.columnNameFirstLower} != null and ${column.columnNameFirstLower} != '0'">
+			   AND ${column.sqlName} = <@mapperEl column.columnNameFirstLower/>
+		   </if>
+		   <#else>
+	       <if test="${column.columnNameFirstLower} != null ">
+				AND ${column.sqlName} = <@mapperEl column.columnNameFirstLower/>
+		   </if>
+	       </#if>
+	     </#list>
+	</trim>
+    </sql>
+
+	<!-- 通用行别名列名映射 -->
+    <sql id="Base_Column_List" >
+        <#list table.columns as column>
+	        ${column.sqlName} ${column.columnNameFirstLower} <#if column_has_next>,</#if>
+	    </#list>
+    </sql>
+
+	<!-- 条件查询${table.tableAlias}记录 -->
+    <select id="getList" resultType="${basepackage}.${subpackage}.entity.${className}Entity">
+        SELECT
+        <include refid="Base_Column_List" />
+		FROM ${table.sqlName}
+        <include refid="where"></include>
+    </select>
+
+	<select id="get" resultType="${basepackage}.${subpackage}.entity.${className}Entity">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM ${table.sqlName}
+		WHERE
+		<#list table.compositeIdColumns as column>
+		${column.sqlName} = <@mapperEl column.columnNameFirstLower/>
+		</#list>
+	</select>
+
+	<!-- 插入${table.tableAlias}记录 -->
+    <insert id="insert" parameterType="${basepackage}.${subpackage}.entity.${className}Entity">
+        insert into ${table.sqlName} (
+		<trim suffixOverrides=",">
+		<#list table.columns as column>
+		<#if column.isDateTimeColumn>
+		<if test="${column.columnNameFirstLower}Str != null ">
+			${column.sqlName} <#if column_has_next>,</#if>
+		</if>
+		<#elseif column.javaType == 'String'>
+		<if test="${column.columnNameFirstLower} != null and  ${column.columnNameFirstLower} != ''">
+			${column.sqlName} <#if column_has_next>,</#if>
+		</if>
+		<#else>
+		<if test="${column.columnNameFirstLower} != null">
+			${column.sqlName} <#if column_has_next>,</#if>
+		</if>
+		</#if>
+        </#list>
+		</trim>
+
+        ) VALUES (
+        <trim suffixOverrides=",">
+		<#list table.columns as column>
+		<#if column.isDateTimeColumn>
+		<if test="${column.columnNameFirstLower}Str != null ">
+			TO_DATE('<@mapperEl column.columnNameFirstLower+"Str"/>', 'yyyy-dd-mm hh:MM:ss') <#if column_has_next>,</#if>
+		</if>
+		<#elseif column.javaType == 'String'>
+		<if test="${column.columnNameFirstLower} != null and  ${column.columnNameFirstLower} != ''">
+			<@mapperEl column.columnNameFirstLower/> <#if column_has_next>,</#if>
+		</if>
+		<#elseif column.javaType == 'Float'>
+		<if test="${column.columnNameFirstLower} != null and  ${column.columnNameFirstLower} != 0">
+			<@mapperEl column.columnNameFirstLower/> <#if column_has_next>,</#if>
+		</if>
+		<#else>
+		<if test="${column.columnNameFirstLower} != null">
+			<@mapperEl column.columnNameFirstLower/> <#if column_has_next>,</#if>
+		</if>
+		</#if>
+        </#list>
+        </trim>
+        )
+    </insert>
+
+	<!-- 修改一条${table.tableAlias}记录 -->
+    <update id="update" parameterType="${basepackage}.${subpackage}.entity.${className}Entity" >
+        UPDATE ${table.sqlName} SET
+        <trim suffixOverrides=",">
+		<#list table.notPkColumns as column>
+		<#if column.isDateTimeColumn>
+		<if test="${column.columnNameFirstLower}Str != null ">
+			${column.sqlName} = TO_DATE('<@mapperEl column.columnNameFirstLower+"Str"/>', 'yyyy-dd-mm hh:MM:ss') <#if column_has_next>,</#if>
+		</if>
+		<#elseif column.javaType == 'String'>
+		<if test="${column.columnNameFirstLower} != null and  ${column.columnNameFirstLower} != ''">
+			${column.sqlName} = <@mapperEl column.columnNameFirstLower/> <#if column_has_next>,</#if>
+		</if>
+		<#elseif column.javaType == 'Float'>
+		<if test="${column.columnNameFirstLower} != null and  ${column.columnNameFirstLower} != 0">
+			${column.sqlName} = <@mapperEl column.columnNameFirstLower/> <#if column_has_next>,</#if>
+		</if>
+		<#else>
+		<if test="${column.columnNameFirstLower} != null">
+			${column.sqlName} = <@mapperEl column.columnNameFirstLower/> <#if column_has_next>,</#if>
+		</if>
+		</#if>
+	    </#list>
+        </trim>
+	    
+        WHERE 
+        	<#list table.compositeIdColumns as column>
+	        ${column.sqlName} = <@mapperEl column.columnNameLower/> <#if column_has_next>,</#if>
+	        </#list>
+    </update>
+
+	<!-- 删除一条${table.tableAlias}记录 -->
+    <delete id="delete" parameterType="${basepackage}.${subpackage}.entity.${className}Entity" >
+        DELETE FROM ${table.sqlName} WHERE
+        <#list table.compositeIdColumns as column>
+        ${column.sqlName} = <@mapperEl column.columnNameFirstLower/> <#if column_has_next>,</#if>
+		</#list>
+    </delete>
+
+  	
+</mapper>
