@@ -12,21 +12,6 @@ import ${basepackage}.${subpackage}.entity.${className}Entity;
 public interface ${className}Mapper  {
 
 	/**
-	 * 获取${table.tableAlias}数据
-	 * @param ${classNameLower}
-	 * @return
-	 */
-	List<${className}Entity> getList(${className}Entity ${classNameLower});
-
-	/**
-	 * 获取${table.tableAlias}详情
-	 * @param id
-	 * @return
-	 */
-	${className}Entity get(String id);
-
-
-	/**
 	 * ${table.tableAlias}修改
 	 * @param ${classNameLower}
 	 * @return 记录影响行数
@@ -39,14 +24,4 @@ public interface ${className}Mapper  {
 	 * @return 记录影响行数
 	 */
 	int insert(${className}Entity ${classNameLower});
-
-	/**
-	 * ${table.tableAlias}删除
-	 * @param ${classNameLower}
-	 * @return 记录影响行数
-	 */
-	int delete(${className}Entity ${classNameLower});
-
-
-
 }

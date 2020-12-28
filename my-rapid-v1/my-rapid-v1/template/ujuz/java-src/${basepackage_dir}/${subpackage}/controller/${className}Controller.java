@@ -26,19 +26,6 @@ public class ${className}Controller {
     @Autowired
     private I${className}Service ${classNameLower}Service;
 
-    @GetMapping("/lists")
-    @ApiOperation(value="获取分页${table.tableAlias}数据", tags={"获取分页${table.tableAlias}数据"})
-    public Result<Page<${className}Dto>> list(@ApiParam(name = "pageNo", value = "当前页") int pageNo,
-                                                @ApiParam(name = "pageSize", value = "每页记录数") int pageSize,
-                                                ${className}Dto ${classNameLower}Dto){
-        return Result.of("查询成功", ${classNameLower}Service.get${className}List(pageNo, pageSize, ${classNameLower}Dto));
-    }
-
-    @GetMapping("/{id}")
-    @ApiOperation(value="获取${table.tableAlias}", tags={"获取${table.tableAlias}"})
-    public Result<${className}Dto> get(@PathVariable("id") String id) {
-        return Result.of("查询成功", ${classNameLower}Service.get(id));
-    }
 
     @PutMapping
     @ApiOperation(value="更新${table.tableAlias}", tags={"更新${table.tableAlias}"})

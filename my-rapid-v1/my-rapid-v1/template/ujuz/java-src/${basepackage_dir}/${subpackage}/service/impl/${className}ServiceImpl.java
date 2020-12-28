@@ -25,20 +25,6 @@ public class ${className}ServiceImpl implements I${className}Service {
     private ${className}Mapper ${classNameLower}Mapper;
 
     @Override
-    public Page<${className}Dto> get${className}List(int pageNo, int pageSize, ${className}Dto ${classNameLower}Dto){
-        PageHelper.startPage(pageNo, pageSize);
-        ${className}Entity ${classNameLower}Entity = BeansUtils.copyProperties(${classNameLower}Dto, ${className}Entity.class);
-        PageInfo<${className}Dto> pageInfo = new PageInfo<>(
-        BeansUtils.copyProperties(${classNameLower}Mapper.getList(${classNameLower}Entity), ${className}Dto.class));
-        return new Page<>(pageInfo);
-    }
-
-    @Override
-    public ${className}Dto get(String id) {
-        return BeansUtils.copyProperties(${classNameLower}Mapper.get(id), ${className}Dto.class);
-    }
-
-    @Override
     public int update(${className}Dto ${classNameLower}){
         return ${classNameLower}Mapper.update(
                 BeansUtils.copyProperties(${classNameLower}, ${className}Entity.class));
@@ -48,11 +34,5 @@ public class ${className}ServiceImpl implements I${className}Service {
     public int insert(${className}Dto ${classNameLower}){
         return ${classNameLower}Mapper.insert(
                  BeansUtils.copyProperties(${classNameLower}, ${className}Entity.class));
-    }
-
-    @Override
-    public int delete(${className}Dto ${classNameLower}){
-        return ${classNameLower}Mapper.delete(
-                BeansUtils.copyProperties(${classNameLower}, ${className}Entity.class));
     }
 }
