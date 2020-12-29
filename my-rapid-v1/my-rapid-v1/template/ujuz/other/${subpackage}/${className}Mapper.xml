@@ -41,11 +41,7 @@
         insert into ${table.sqlName} (
 		<trim suffixOverrides=",">
 		<#list table.columns as column>
-		<#if column.isDateTimeColumn>
-		<if test="${column.columnNameFirstLower}Str != null ">
-			${column.sqlName} <#if column_has_next>,</#if>
-		</if>
-		<#elseif column.javaType == 'String'>
+		<#if column.javaType == 'String'>
 		<if test="${column.columnNameFirstLower} != null and  ${column.columnNameFirstLower} != ''">
 			${column.sqlName} <#if column_has_next>,</#if>
 		</if>
