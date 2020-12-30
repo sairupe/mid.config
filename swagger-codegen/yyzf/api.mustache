@@ -18,7 +18,7 @@ import feign.*;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 
-@FeignClient(value = "{{appKey}}", url = "${feignurl.{{appKey}}}")
+@FeignClient(contextId = "{{classname}}", value = "{{appKey}}", url = "${feignurl.{{appKey}}}")
 {{>generatedAnnotation}}
 public interface {{classname}} {
 
