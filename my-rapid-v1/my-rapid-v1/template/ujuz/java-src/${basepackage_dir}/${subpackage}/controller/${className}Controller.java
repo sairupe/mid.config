@@ -5,8 +5,8 @@ package ${basepackage}.${subpackage}.controller;
 
 import com.yyzf.core.models.Page;
 import com.yyzf.core.models.Result;
-import ${basepackage}.${subpackage}.dto.${className}Dto;
 import ${basepackage}.${subpackage}.service.I${className}Service;
+import ${basepackage}.${subpackage}.dto.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 <#include "/java_imports.include">
 @Api("${table.tableAlias}")
@@ -27,16 +28,42 @@ public class ${className}Controller {
     private I${className}Service ${classNameLower}Service;
 
 
-    @PutMapping
-    @ApiOperation(value="更新${table.tableAlias}", tags={"更新${table.tableAlias}"})
-    public Result<Integer> update(@Valid ${className}Dto ${classNameLower}Dto) {
-        return Result.of("修改成功", ${classNameLower}Service.update(${classNameLower}Dto));
+    @PutMapping("/update${className}")
+    @ApiOperation(value="更新${table.tableAlias}", nickname="update${className}")
+    public Result<Integer> update(@Valid ${className}Dto dto) {
+        return Result.of("修改成功", ${classNameLower}Service.update(dto));
     }
 
-    @PostMapping
-    @ApiOperation(value="插入${table.tableAlias}", tags={"插入${table.tableAlias}"})
-    public Result<Integer> insert(@Valid @RequestBody ${className}Dto ${classNameLower}Dto) {
-        return Result.of("录入成功", ${classNameLower}Service.insert(${classNameLower}Dto));
+    @PostMapping("/insert${className}")
+    @ApiOperation(value="插入${table.tableAlias}", nickname="insert${className}")
+    public Result<Integer> insert(@Valid @RequestBody ${className}Dto dto) {
+        return Result.of("录入成功", ${classNameLower}Service.insert(dto));
+    }
+
+	@PostMapping("/getById")
+    @ApiOperation(value="根据id获取${table.tableAlias}", nickname="get${className}ById")
+    public Result<${className}Dto> getById(@Valid @RequestBody LongIdWrapperDto dto) {
+		Long id = dto.getId();
+        return Result.of("查询成功", ${classNameLower}Service.getById(id));
+    }
+	
+	@PostMapping("/getByIds")
+    @ApiOperation(value="批量根据id获取${table.tableAlias}", nickname="get${className}ByIds")
+    public Result<List<${className}Dto>> getByIds(@Valid @RequestBody LongIdsWrapperDto dto) {
+		List<Long> idList = dto.getIdList();
+        return Result.of("查询成功", ${classNameLower}Service.getByIds(idList));
+    }
+	
+	@PostMapping("/deleteById")
+    @ApiOperation(value="根据id删除${table.tableAlias}", nickname="delete${className}ById")
+    public Result<Integer> deleteById(@Valid @RequestBody DeleteByIdDto dto) {
+        return Result.of("删除成功", ${classNameLower}Service.deleteById(dto));
+    }
+	
+	@PostMapping("/deleteByIds")
+    @ApiOperation(value="批量根据id删除${table.tableAlias}", nickname="delete${className}ByIds")
+    public Result<Integer> deletedByIds(@Valid @RequestBody DeleteByIdsDto dto) {
+        return Result.of("删除成功", ${classNameLower}Service.deleteByIds(dto));
     }
 
 }

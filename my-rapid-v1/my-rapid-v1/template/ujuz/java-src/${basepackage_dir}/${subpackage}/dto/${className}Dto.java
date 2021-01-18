@@ -20,10 +20,9 @@ import java.util.Date;
 public class ${className}Dto implements Serializable {
 
     <#list table.columns as column>
-    /** ${column.columnAlias} */
     ${column.hibernateValidatorExprssion}
-    @ApiModelProperty(value = "${column.columnAlias}", notes = "${column.hibernateValidatorExprssion}")
-    private ${column.simpleJavaType} ${column.columnNameLower};
+    @ApiModelProperty(value = "${column.columnAlias}")
+    private ${column.simpleJavaType} ${column.columnNameLower};	
 	
     </#list>    
 }

@@ -4,6 +4,7 @@
 package ${basepackage}.${subpackage}.dao;
 import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 import ${basepackage}.${subpackage}.entity.${className}Entity;
 
@@ -13,15 +14,38 @@ public interface ${className}Mapper  {
 
 	/**
 	 * ${table.tableAlias}修改
-	 * @param ${classNameLower}
-	 * @return 记录影响行数
 	 */
 	int update(${className}Entity ${classNameLower});
 
 	/**
 	 * ${table.tableAlias}添加
-	 * @param ${classNameLower}
-	 * @return 记录影响行数
 	 */
 	int insert(${className}Entity ${classNameLower});
+	
+	
+    /**
+     * 根据ID获取
+     */
+    ${className}Entity getById(@Param("id") Long id);
+
+    /**
+     * 根据ID列表获取
+     */
+    List<${className}Entity> getByIds(@Param("ids") List<Long> ids);
+	
+	/**
+     * 根据ID批量删除
+     */
+    int deleteByIds(@Param("ids") List<Long> ids,
+                    @Param("updatedBy") Long updatedBy,
+                    @Param("updatedName") String updatedName,
+                    @Param("updatedTm") Long updatedTm);
+					
+	/**
+     * 根据ID删除
+     */
+    int deleteById(@Param("id") Long id,
+                    @Param("updatedBy") Long updatedBy,
+                    @Param("updatedName") String updatedName,
+                    @Param("updatedTm") Long updatedTm);
 }

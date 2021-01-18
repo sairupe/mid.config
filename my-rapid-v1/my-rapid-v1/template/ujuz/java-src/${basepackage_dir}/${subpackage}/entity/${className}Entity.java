@@ -17,6 +17,7 @@ public class ${className}Entity implements Serializable {
     /** ${column.columnAlias} */
     private ${column.simpleJavaType} ${column.columnNameLower};
 
+
     </#list>
 }
 <#macro generateJavaColumns>
