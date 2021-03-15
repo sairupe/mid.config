@@ -65,6 +65,7 @@
         insert into ${table.sqlName} (
 		<trim suffixOverrides=",">
 		<#list table.columns as column>
+		<#if column.sqlName != 'last_update_tm'>
 		<#if column.javaType == 'String'>
 		<if test="${column.columnNameFirstLower} != null and  ${column.columnNameFirstLower} != ''">
 			${column.sqlName} <#if column_has_next>,</#if>
@@ -74,12 +75,14 @@
 			${column.sqlName} <#if column_has_next>,</#if>
 		</if>
 		</#if>
+		</#if>
         </#list>
 		</trim>
 
         ) VALUES (
         <trim suffixOverrides=",">
 		<#list table.columns as column>
+		<#if column.sqlName != 'last_update_tm'>
 		<#if column.javaType == 'String'>
 		<if test="${column.columnNameFirstLower} != null and  ${column.columnNameFirstLower} != ''">
 			<@mapperEl column.columnNameFirstLower/> <#if column_has_next>,</#if>
@@ -92,6 +95,7 @@
 		<if test="${column.columnNameFirstLower} != null">
 			<@mapperEl column.columnNameFirstLower/> <#if column_has_next>,</#if>
 		</if>
+		</#if>
 		</#if>
         </#list>
         </trim>
@@ -102,6 +106,7 @@
         UPDATE ${table.sqlName} SET
         <trim suffixOverrides=",">
 		<#list table.notPkColumns as column>
+		<#if column.sqlName != 'last_update_tm'>
 		<#if column.javaType == 'String'>
 		<if test="${column.columnNameFirstLower} != null and  ${column.columnNameFirstLower} != ''">
 			${column.sqlName} = <@mapperEl column.columnNameFirstLower/> <#if column_has_next>,</#if>
@@ -114,6 +119,7 @@
 		<if test="${column.columnNameFirstLower} != null">
 			${column.sqlName} = <@mapperEl column.columnNameFirstLower/> <#if column_has_next>,</#if>
 		</if>
+		</#if>
 		</#if>
 	    </#list>
         </trim>
