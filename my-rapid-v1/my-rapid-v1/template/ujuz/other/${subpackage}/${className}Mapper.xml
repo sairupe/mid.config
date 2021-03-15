@@ -12,18 +12,19 @@
     <sql id="where">
 	<trim prefix="WHERE" prefixOverrides="AND|OR"> 
         <#list table.columns as column>
-	       <#if column.javaType == 'String'>
+	       <#if column.javaType == 'String'> <#-- 条件1 -->
 		   <if test="${column.columnNameFirstLower} != null and ${column.columnNameFirstLower} != ''">
 			   AND ${column.sqlName} = <@mapperEl column.columnNameFirstLower/>
 		   </if>
-		   <#elseif column.javaType == 'Float'>
+		   <#elseif column.javaType == 'Float'> <#-- 条件2 -->
 		   <if test="${column.columnNameFirstLower} != null and ${column.columnNameFirstLower} != '0'">
 			   AND ${column.sqlName} = <@mapperEl column.columnNameFirstLower/>
 		   </if>
-		   <#else>
-	       <if test="${column.columnNameFirstLower} != null ">
+		   <#elseif column.sqlName != 'last_update_tm'> <#-- 条件3 -->
+		   <if test="${column.columnNameFirstLower} != null">
 				AND ${column.sqlName} = <@mapperEl column.columnNameFirstLower/>
 		   </if>
+		   <#else>    
 	       </#if>
 	     </#list>
 	</trim>
