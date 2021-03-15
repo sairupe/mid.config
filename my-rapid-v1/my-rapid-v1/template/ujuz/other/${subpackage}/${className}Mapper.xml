@@ -12,15 +12,15 @@
     <sql id="where">
 	<trim prefix="WHERE" prefixOverrides="AND|OR"> 
         <#list table.columns as column>
-	       <#if column.javaType == 'String'> <#-- 条件1 -->
+	       <#if column.javaType == 'String'>
 		   <if test="${column.columnNameFirstLower} != null and ${column.columnNameFirstLower} != ''">
 			   AND ${column.sqlName} = <@mapperEl column.columnNameFirstLower/>
 		   </if>
-		   <#elseif column.javaType == 'Float'> <#-- 条件2 -->
+		   <#elseif column.javaType == 'Float'>
 		   <if test="${column.columnNameFirstLower} != null and ${column.columnNameFirstLower} != '0'">
 			   AND ${column.sqlName} = <@mapperEl column.columnNameFirstLower/>
 		   </if>
-		   <#elseif column.sqlName != 'last_update_tm'> <#-- 条件3 -->
+		   <#elseif column.sqlName != 'last_update_tm'>
 		   <if test="${column.columnNameFirstLower} != null">
 				AND ${column.sqlName} = <@mapperEl column.columnNameFirstLower/>
 		   </if>
@@ -33,7 +33,7 @@
 	<!-- 通用行别名列名映射 -->
     <sql id="Base_Column_List" >
         <#list table.columns as column>
-	        ${column.sqlName} ${column.columnNameFirstLower} <#if column_has_next>,</#if>
+		<#if column.sqlName != 'last_update_tm'> <#if column_has_next && column_index &gt; 0>,</#if> ${column.sqlName} ${column.columnNameFirstLower} </#if>
 	    </#list>
     </sql>
 	
