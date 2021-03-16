@@ -20,9 +20,11 @@ import java.util.Date;
 public class ${className}Dto implements Serializable {
 
     <#list table.columns as column>
+	<#if column.sqlName != 'last_update_tm'>
     ${column.hibernateValidatorExprssion}
     @ApiModelProperty(value = "${column.columnAlias}")
     private ${column.simpleJavaType} ${column.columnNameLower};	
+	</#if>
 	
     </#list>    
 }

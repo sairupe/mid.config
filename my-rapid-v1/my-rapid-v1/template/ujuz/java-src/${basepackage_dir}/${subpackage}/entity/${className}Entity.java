@@ -14,9 +14,10 @@ import java.util.Date;
 public class ${className}Entity implements Serializable {
 
     <#list table.columns as column>
+	<#if column.sqlName != 'last_update_tm'>
     /** ${column.columnAlias} */
     private ${column.simpleJavaType} ${column.columnNameLower};
-
+	</#if>
 
     </#list>
 }
