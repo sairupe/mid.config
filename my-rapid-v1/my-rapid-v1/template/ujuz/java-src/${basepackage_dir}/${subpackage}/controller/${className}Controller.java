@@ -39,6 +39,12 @@ public class ${className}Controller {
     public Result<Integer> insert(@Valid @RequestBody ${className}Dto dto) {
         return Result.of("录入成功", ${classNameLower}Service.insert(dto));
     }
+	
+	@PostMapping("/insert${className}Batch")
+    @ApiOperation(value="插入${table.tableAlias}", nickname="insert${className}Batch")
+    public Result<Integer> insertBatch(@Valid @RequestBody List<${className}Dto> insertList) {
+        return Result.of("录入成功", ${classNameLower}Service.insertBatch(insertList));
+    }
 
 	@PostMapping("/getById")
     @ApiOperation(value="根据id获取${table.tableAlias}", nickname="get${className}ById")

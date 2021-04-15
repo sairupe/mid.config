@@ -79,6 +79,32 @@
         </trim>
         )
     </insert>
+	
+	<insert id="insertBatch" parameterType="java.util.List">
+        insert into ${table.sqlName} (
+		<trim suffixOverrides=",">
+		<#list table.columns as column>
+		<#if column.sqlName != 'last_update_tm'>
+			${column.sqlName} <#if column_has_next>,</#if>
+		</#if>
+        </#list>
+		</trim>
+
+        ) VALUES 
+		<foreach collection="insertList" index="index" item="insert" open="" separator="," close="">
+			(
+			<trim suffixOverrides=",">
+			<#list table.columns as column>
+			<#if column.sqlName != 'last_update_tm'>
+				<#noparse>#{insert.</#noparse>${column.columnNameFirstLower}<#noparse>}</#noparse> <#if column_has_next>,</#if>
+			</#if>
+			</#list>
+			</trim>
+			)
+		</foreach>
+    </insert>
+	
+	
 
     <update id="update" parameterType="${basepackage}.${subpackage}.entity.${className}Entity" >
         UPDATE ${table.sqlName} SET

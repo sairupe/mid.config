@@ -37,6 +37,12 @@ public class ${className}ServiceImpl implements I${className}Service {
                  BeansUtils.copyProperties(dto, ${className}Entity.class));
     }
 	
+	
+	@Override
+    public int insertBatch(List<${className}Dto> insertList){
+        return ${classNameLower}Mapper.insertBatch(insertList);
+    }
+	
 	@Override
     public ${className}Dto getById(Long ${classNameLower}Id){
         ${className}Entity entity = ${classNameLower}Mapper.getById(${classNameLower}Id);

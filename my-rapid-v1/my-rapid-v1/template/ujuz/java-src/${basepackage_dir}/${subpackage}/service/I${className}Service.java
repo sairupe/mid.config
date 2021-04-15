@@ -19,7 +19,12 @@ public interface I${className}Service {
 	/**
 	 * ${table.tableAlias}添加
 	 */
-	int insert(${className}Dto ${classNameLower});
+	int insertBatch(${className}Dto ${classNameLower});
+	
+		/**
+	 * ${table.tableAlias}批量添加
+	 */
+	int insert(List<${className}Dto> insertList);
 	
 	/**
 	 * 根据ID获取课程分类

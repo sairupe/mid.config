@@ -22,6 +22,10 @@ public interface ${className}Mapper  {
 	 */
 	int insert(${className}Entity ${classNameLower});
 	
+	/**
+	 * ${table.tableAlias}批量添加
+	 */
+	int insertBatch(List<${className}Entity> insertList);
 	
     /**
      * 根据ID获取
