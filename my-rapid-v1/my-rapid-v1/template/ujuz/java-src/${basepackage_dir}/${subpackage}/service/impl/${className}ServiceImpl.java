@@ -40,7 +40,7 @@ public class ${className}ServiceImpl implements I${className}Service {
 	
 	@Override
     public int insertBatch(List<${className}Dto> insertList){
-        return ${classNameLower}Mapper.insertBatch(insertList);
+        return ${classNameLower}Mapper.insertBatch(BeansUtils.copyProperties(insertList, ${className}Entity.class));
     }
 	
 	@Override
