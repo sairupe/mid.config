@@ -5,7 +5,7 @@ package ${basepackage}.${subpackage}.dao;
 import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
-
+import ${basepackage}.${subpackage}.dto.*;
 import ${basepackage}.${subpackage}.entity.${className}Entity;
 
 <#include "/java_imports.include">

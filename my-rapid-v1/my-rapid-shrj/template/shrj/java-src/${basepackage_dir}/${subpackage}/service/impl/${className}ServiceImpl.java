@@ -6,11 +6,11 @@ package ${basepackage}.${subpackage}.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
-import ${basepackage}.${subpackage}.dao.${className}Mapper;
+import ${basepackage}.${subpackage}.mapper.${className}Mapper;
 import ${basepackage}.${subpackage}.dto.*;
 import ${basepackage}.${subpackage}.entity.${className}Entity;
 import ${basepackage}.${subpackage}.service.I${className}Service;
-import com.yyzf.core.utils.BeansUtils;
+import ${basepackage}.${subpackage}.utils.*;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -27,32 +27,32 @@ public class ${className}ServiceImpl implements I${className}Service {
     @Override
     public int update(${className}Dto dto){
         return ${classNameLower}Mapper.update(
-                BeansUtils.copyProperties(dto, ${className}Entity.class));
+                BeansUtilz.copyProperties(dto, ${className}Entity.class));
     }
 
     @Override
     public int insert(${className}Dto dto){
         return ${classNameLower}Mapper.insert(
-                 BeansUtils.copyProperties(dto, ${className}Entity.class));
+        BeansUtilz.copyProperties(dto, ${className}Entity.class));
     }
 	
 	
 	@Override
     public int insertBatch(List<${className}Dto> insertList){
-        return ${classNameLower}Mapper.insertBatch(BeansUtils.copyProperties(insertList, ${className}Entity.class));
+        return ${classNameLower}Mapper.insertBatch(BeansUtilz.copyProperties(insertList, ${className}Entity.class));
     }
 	
 	@Override
     public ${className}Dto getById(Long ${classNameLower}Id){
         ${className}Entity entity = ${classNameLower}Mapper.getById(${classNameLower}Id);
-		${className}Dto result = BeansUtils.copyProperties(entity, ${className}Dto.class);
+		${className}Dto result = BeansUtilz.copyProperties(entity, ${className}Dto.class);
 		return result;
     }
 
     @Override
     public List<${className}Dto> getByIds(List<Long> idList){
 		List<${className}Entity> entityList = ${classNameLower}Mapper.getByIds(idList);
-		List<${className}Dto> result = BeansUtils.copyProperties(entityList, ${className}Dto.class);
+		List<${className}Dto> result = BeansUtilz.copyProperties(entityList, ${className}Dto.class);
         return result;
     }
 	

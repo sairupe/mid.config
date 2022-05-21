@@ -3,7 +3,7 @@
 <#assign classNameLower = className?uncap_first>
 package ${basepackage}.${subpackage}.service;
 
-import ${basepackage}.${subpackage}.dto.${className}Dto;
+import ${basepackage}.${subpackage}.dto.*;
 import java.util.List;
 
 <#include "/java_imports.include">

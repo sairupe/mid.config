@@ -5,6 +5,7 @@ package ${basepackage}.${subpackage}.controller;
 
 import ${basepackage}.${subpackage}.service.I${className}Service;
 import ${basepackage}.${subpackage}.dto.*;
+import ${basepackage}.${subpackage}.common.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -28,7 +29,7 @@ public class ${className}Controller {
 
     @PostMapping("/update${className}")
     @ApiOperation(value="更新${table.tableAlias}", nickname="update${className}")
-    public Result<Integer> update(@Valid @RequestBody ${className}Dto dto) {
+    public Result<Integer> update(@RequestBody ${className}Dto dto) {
         return Result.suc("修改成功", ${classNameLower}Service.update(dto));
     }
 
