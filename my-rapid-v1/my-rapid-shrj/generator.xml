@@ -34,7 +34,7 @@
 	<entry key="tableRemovePrefixes">T_AR,T_BD,T_CD,T_PD,T_CL,T_IP,T_LO,T_RI,T_EV,FINA_,SERV_,CONF_,ESTA_,PROP_,CUST_,CONT_</entry>
 
 	<!-- 需要移除的列名前缀,逗号分隔,示例: S_,I_ -->
-	<entry key="rowRemovePrefixes">S_,B_,I_,DT_,TS_,M_,F_,PK_I_N,PK_I_S</entry>
+	<entry key="rowRemovePrefixes">B_,I_,DT_,TS_,M_,F_,PK_I_N,PK_I_S</entry>
 
 	<!-- 需要忽略的表,逗号分隔,示例: ACT_,BATCH_ -->
     <entry key="skipTablePrefixes">ACT_,tmp_</entry>
