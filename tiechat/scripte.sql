@@ -41,8 +41,8 @@ CREATE TABLE `sys_poi` (
   `poi_name` varchar(128) NOT NULL COMMENT '行政区名称',
   `poi_address` varchar(128) NOT NULL COMMENT '行政区名称',
   `district_code` int(11) NOT NULL COMMENT '行政区代码',
-  `longitude` double(16) DEFAULT NULL COMMENT '经度',
-  `latitude` double(16) DEFAULT NULL COMMENT '维度',
+  `longitude` double DEFAULT NULL COMMENT '经度',
+  `latitude` double DEFAULT NULL COMMENT '维度',
   `uid` varchar(32) DEFAULT NULL COMMENT 'UID',
   `detail` JSON DEFAULT NULL COMMENT '其他详情',
   `created_by` bigint(20) NOT NULL COMMENT '创建人id',
@@ -54,5 +54,5 @@ CREATE TABLE `sys_poi` (
   `deleted_tm` bigint(20) NOT NULL COMMENT '删除时间',
   `is_flag` int(11) NOT NULL COMMENT '0-已删除，1-正常',
   `last_update_tm` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '运维使用字段',
-  PRIMARY KEY (`district_id`) USING BTREE
+  PRIMARY KEY (`poi_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='地图POI信息表';
