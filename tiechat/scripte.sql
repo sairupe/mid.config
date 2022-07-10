@@ -40,6 +40,8 @@ CREATE TABLE `sys_poi` (
   `poi_id` bigint(20) NOT NULL COMMENT 'POI ID',
   `poi_name` varchar(128) NOT NULL COMMENT '行政区名称',
   `poi_address` varchar(128) NOT NULL COMMENT '行政区名称',
+  `main_type` int(11) NOT NULL COMMENT 'POI主类别',
+  `sub_type` int(11) NOT NULL COMMENT 'POI子类别',
   `district_code` int(11) NOT NULL COMMENT '行政区代码',
   `longitude` double DEFAULT NULL COMMENT '经度',
   `latitude` double DEFAULT NULL COMMENT '维度',
