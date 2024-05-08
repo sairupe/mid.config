@@ -1,0 +1,218 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- FavorActivityMapper.xml文件 -->
+<mapper namespace="com.tiechat.web.api.mapper.FavorActivityMapper">
+
+	<!-- 通用行别名列名映射 -->
+    <sql id="Base_Column_List" >
+		  favor_id favorId 
+		 , user_id userId 
+		 , activity_id activityId 
+		 , created_by createdBy 
+		 , created_tm createdTm 
+		 , created_name createdName 
+		 , updated_by updatedBy 
+		 , updated_tm updatedTm 
+		 , updated_name updatedName 
+		 , deleted_tm deletedTm 
+		 , is_flag isFlag 
+		
+    </sql>
+	
+	
+    <select id="getById" resultType="com.tiechat.web.api.entity.FavorActivityEntity">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM favor_activity
+        <where>
+	         favor_id = #{id}
+		</where>
+    </select>
+
+    <select id="getByIds" resultType="com.tiechat.web.api.entity.FavorActivityEntity">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM favor_activity
+        WHERE  favor_id IN
+		<foreach collection="ids" index="index" item="id" open="(" separator="," close=")">
+		#{id}
+		</foreach>
+    </select>
+
+    <insert id="insert" parameterType="com.tiechat.web.api.entity.FavorActivityEntity">
+        insert into favor_activity (
+		<trim suffixOverrides=",">
+		<if test="favorId != null">
+			favor_id ,
+		</if>
+		<if test="userId != null">
+			user_id ,
+		</if>
+		<if test="activityId != null">
+			activity_id ,
+		</if>
+		<if test="createdBy != null">
+			created_by ,
+		</if>
+		<if test="createdTm != null">
+			created_tm ,
+		</if>
+		<if test="createdName != null and  createdName != ''">
+			created_name ,
+		</if>
+		<if test="updatedBy != null">
+			updated_by ,
+		</if>
+		<if test="updatedTm != null">
+			updated_tm ,
+		</if>
+		<if test="updatedName != null and  updatedName != ''">
+			updated_name ,
+		</if>
+		<if test="deletedTm != null">
+			deleted_tm ,
+		</if>
+		<if test="isFlag != null">
+			is_flag ,
+		</if>
+		</trim>
+
+        ) VALUES (
+        <trim suffixOverrides=",">
+		<if test="favorId != null">
+			#{favorId} ,
+		</if>
+		<if test="userId != null">
+			#{userId} ,
+		</if>
+		<if test="activityId != null">
+			#{activityId} ,
+		</if>
+		<if test="createdBy != null">
+			#{createdBy} ,
+		</if>
+		<if test="createdTm != null">
+			#{createdTm} ,
+		</if>
+		<if test="createdName != null and  createdName != ''">
+			#{createdName} ,
+		</if>
+		<if test="updatedBy != null">
+			#{updatedBy} ,
+		</if>
+		<if test="updatedTm != null">
+			#{updatedTm} ,
+		</if>
+		<if test="updatedName != null and  updatedName != ''">
+			#{updatedName} ,
+		</if>
+		<if test="deletedTm != null">
+			#{deletedTm} ,
+		</if>
+		<if test="isFlag != null">
+			#{isFlag} ,
+		</if>
+        </trim>
+        )
+    </insert>
+	
+	<insert id="insertBatch" parameterType="java.util.List">
+        insert into favor_activity (
+		<trim suffixOverrides=",">
+			favor_id ,
+			user_id ,
+			activity_id ,
+			created_by ,
+			created_tm ,
+			created_name ,
+			updated_by ,
+			updated_tm ,
+			updated_name ,
+			deleted_tm ,
+			is_flag ,
+		</trim>
+
+        ) VALUES 
+		<foreach collection="insertList" index="index" item="insert" open="" separator="," close="">
+			(
+			<trim suffixOverrides=",">
+				#{insert.favorId} ,
+				#{insert.userId} ,
+				#{insert.activityId} ,
+				#{insert.createdBy} ,
+				#{insert.createdTm} ,
+				#{insert.createdName} ,
+				#{insert.updatedBy} ,
+				#{insert.updatedTm} ,
+				#{insert.updatedName} ,
+				#{insert.deletedTm} ,
+				#{insert.isFlag} ,
+			</trim>
+			)
+		</foreach>
+    </insert>
+	
+	
+
+    <update id="update" parameterType="com.tiechat.web.api.entity.FavorActivityEntity" >
+        UPDATE favor_activity SET
+        <trim suffixOverrides=",">
+		<if test="userId != null">
+			user_id = #{userId} ,
+		</if>
+		<if test="activityId != null">
+			activity_id = #{activityId} ,
+		</if>
+		<if test="createdBy != null">
+			created_by = #{createdBy} ,
+		</if>
+		<if test="createdTm != null">
+			created_tm = #{createdTm} ,
+		</if>
+		<if test="createdName != null and  createdName != ''">
+			created_name = #{createdName} ,
+		</if>
+		<if test="updatedBy != null">
+			updated_by = #{updatedBy} ,
+		</if>
+		<if test="updatedTm != null">
+			updated_tm = #{updatedTm} ,
+		</if>
+		<if test="updatedName != null and  updatedName != ''">
+			updated_name = #{updatedName} ,
+		</if>
+		<if test="deletedTm != null">
+			deleted_tm = #{deletedTm} ,
+		</if>
+		<if test="isFlag != null">
+			is_flag = #{isFlag} ,
+		</if>
+        </trim>
+        WHERE 
+	        favor_id = #{favorId} 
+    </update>	
+	
+	<update id="deleteById" parameterType="java.lang.Long" >
+        UPDATE favor_activity SET
+	    is_flag = 0,
+        updated_by = #{updatedBy},
+        updated_name = #{updatedName},
+        updated_tm = #{updatedTm}
+        <where>
+		 favor_id = #{id}
+		</where>
+    </update>	
+	
+	<update id="deleteByIds" parameterType="java.util.List" >
+        UPDATE favor_activity SET
+	    is_flag = 0,
+        updated_by = #{updatedBy},
+        updated_name = #{updatedName},
+        updated_tm = #{updatedTm}
+        WHERE  favor_id IN
+		<foreach collection="ids" index="index" item="id" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+    </update>
+</mapper>

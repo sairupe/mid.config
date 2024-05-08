@@ -7,10 +7,10 @@
 		2.可以引用环境变量: ${env.JAVA_HOME} or System.properties: ${user.home},property之间也可以相互引用
 	</comment>
 	
-	<entry key="basepackage">com.shrj.cms</entry>
+	<entry key="basepackage">com.shrj.bi</entry>
 
 	<!-- 子包,只支持单个词 -->
-	<entry key="subpackage">srv</entry>
+	<entry key="subpackage">api</entry>
 	
 	<!-- jsp namespace: web/${namespace}/${className}/list.jsp -->
 	<entry key="namespace">shrj</entry>
@@ -65,7 +65,7 @@
 	
 	<!--mysql -->
 	<!-- <entry key="jdbc.url">jdbc:mysql://39.108.6.153:3306/liveeasy_erp?useUnicode=true&amp;characterEncoding=UTF-8</entry> -->
-	<entry key="jdbc.url">jdbc:mysql://localhost:3306/shrj_cms?useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false</entry>
+	<entry key="jdbc.url">jdbc:mysql://localhost:3306/shrj_bi?useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false</entry>
 	<entry key="jdbc.driver">com.mysql.jdbc.Driver</entry>
 
 

@@ -1,0 +1,302 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- TranscodeLogMapper.xml文件 -->
+<mapper namespace="com.gxbigdata.opd.mapper.TranscodeLogMapper">
+
+	<!-- 通用行别名列名映射 -->
+    <sql id="Base_Column_List" >
+		  log_id logId 
+		 , call_ip callIp 
+		 , http_version httpVersion 
+		 , headers headers 
+		 , raw_header rawHeader 
+		 , uri uri 
+		 , request_uri requestUri 
+		 , uri_args uriArgs 
+		 , method method 
+		 , body_data bodyData 
+		 , response_data responseData 
+		 , created_by createdBy 
+		 , created_tm createdTm 
+		 , created_name createdName 
+		 , updated_by updatedBy 
+		 , updated_tm updatedTm 
+		 , updated_name updatedName 
+		 , is_flag isFlag 
+		
+    </sql>
+	
+	
+    <select id="getById" resultType="com.gxbigdata.opd.entity.TranscodeLogEntity">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM transcode_log
+        <where>
+	         log_id = #{id}
+		</where>
+    </select>
+
+    <select id="getByIds" resultType="com.gxbigdata.opd.entity.TranscodeLogEntity">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM transcode_log
+        WHERE  log_id IN
+		<foreach collection="ids" index="index" item="id" open="(" separator="," close=")">
+		#{id}
+		</foreach>
+    </select>
+
+    <insert id="insert" parameterType="com.gxbigdata.opd.entity.TranscodeLogEntity">
+        insert into transcode_log (
+		<trim suffixOverrides=",">
+		<if test="logId != null">
+			log_id ,
+		</if>
+		<if test="callIp != null and  callIp != ''">
+			call_ip ,
+		</if>
+		<if test="httpVersion != null and  httpVersion != ''">
+			http_version ,
+		</if>
+		<if test="headers != null and  headers != ''">
+			headers ,
+		</if>
+		<if test="rawHeader != null and  rawHeader != ''">
+			raw_header ,
+		</if>
+		<if test="uri != null and  uri != ''">
+			uri ,
+		</if>
+		<if test="requestUri != null and  requestUri != ''">
+			request_uri ,
+		</if>
+		<if test="uriArgs != null and  uriArgs != ''">
+			uri_args ,
+		</if>
+		<if test="method != null and  method != ''">
+			method ,
+		</if>
+		<if test="bodyData != null and  bodyData != ''">
+			body_data ,
+		</if>
+		<if test="responseData != null and  responseData != ''">
+			response_data ,
+		</if>
+		<if test="createdBy != null">
+			created_by ,
+		</if>
+		<if test="createdTm != null">
+			created_tm ,
+		</if>
+		<if test="createdName != null and  createdName != ''">
+			created_name ,
+		</if>
+		<if test="updatedBy != null">
+			updated_by ,
+		</if>
+		<if test="updatedTm != null">
+			updated_tm ,
+		</if>
+		<if test="updatedName != null and  updatedName != ''">
+			updated_name ,
+		</if>
+		<if test="isFlag != null">
+			is_flag ,
+		</if>
+		</trim>
+
+        ) VALUES (
+        <trim suffixOverrides=",">
+		<if test="logId != null">
+			#{logId} ,
+		</if>
+		<if test="callIp != null and  callIp != ''">
+			#{callIp} ,
+		</if>
+		<if test="httpVersion != null and  httpVersion != ''">
+			#{httpVersion} ,
+		</if>
+		<if test="headers != null and  headers != ''">
+			#{headers} ,
+		</if>
+		<if test="rawHeader != null and  rawHeader != ''">
+			#{rawHeader} ,
+		</if>
+		<if test="uri != null and  uri != ''">
+			#{uri} ,
+		</if>
+		<if test="requestUri != null and  requestUri != ''">
+			#{requestUri} ,
+		</if>
+		<if test="uriArgs != null and  uriArgs != ''">
+			#{uriArgs} ,
+		</if>
+		<if test="method != null and  method != ''">
+			#{method} ,
+		</if>
+		<if test="bodyData != null and  bodyData != ''">
+			#{bodyData} ,
+		</if>
+		<if test="responseData != null and  responseData != ''">
+			#{responseData} ,
+		</if>
+		<if test="createdBy != null">
+			#{createdBy} ,
+		</if>
+		<if test="createdTm != null">
+			#{createdTm} ,
+		</if>
+		<if test="createdName != null and  createdName != ''">
+			#{createdName} ,
+		</if>
+		<if test="updatedBy != null">
+			#{updatedBy} ,
+		</if>
+		<if test="updatedTm != null">
+			#{updatedTm} ,
+		</if>
+		<if test="updatedName != null and  updatedName != ''">
+			#{updatedName} ,
+		</if>
+		<if test="isFlag != null">
+			#{isFlag} ,
+		</if>
+        </trim>
+        )
+    </insert>
+	
+	<insert id="insertBatch" parameterType="java.util.List">
+        insert into transcode_log (
+		<trim suffixOverrides=",">
+			log_id ,
+			call_ip ,
+			http_version ,
+			headers ,
+			raw_header ,
+			uri ,
+			request_uri ,
+			uri_args ,
+			method ,
+			body_data ,
+			response_data ,
+			created_by ,
+			created_tm ,
+			created_name ,
+			updated_by ,
+			updated_tm ,
+			updated_name ,
+			is_flag ,
+		</trim>
+
+        ) VALUES 
+		<foreach collection="insertList" index="index" item="insert" open="" separator="," close="">
+			(
+			<trim suffixOverrides=",">
+				#{insert.logId} ,
+				#{insert.callIp} ,
+				#{insert.httpVersion} ,
+				#{insert.headers} ,
+				#{insert.rawHeader} ,
+				#{insert.uri} ,
+				#{insert.requestUri} ,
+				#{insert.uriArgs} ,
+				#{insert.method} ,
+				#{insert.bodyData} ,
+				#{insert.responseData} ,
+				#{insert.createdBy} ,
+				#{insert.createdTm} ,
+				#{insert.createdName} ,
+				#{insert.updatedBy} ,
+				#{insert.updatedTm} ,
+				#{insert.updatedName} ,
+				#{insert.isFlag} ,
+			</trim>
+			)
+		</foreach>
+    </insert>
+	
+	
+
+    <update id="update" parameterType="com.gxbigdata.opd.entity.TranscodeLogEntity" >
+        UPDATE transcode_log SET
+        <trim suffixOverrides=",">
+		<if test="callIp != null and  callIp != ''">
+			call_ip = #{callIp} ,
+		</if>
+		<if test="httpVersion != null and  httpVersion != ''">
+			http_version = #{httpVersion} ,
+		</if>
+		<if test="headers != null and  headers != ''">
+			headers = #{headers} ,
+		</if>
+		<if test="rawHeader != null and  rawHeader != ''">
+			raw_header = #{rawHeader} ,
+		</if>
+		<if test="uri != null and  uri != ''">
+			uri = #{uri} ,
+		</if>
+		<if test="requestUri != null and  requestUri != ''">
+			request_uri = #{requestUri} ,
+		</if>
+		<if test="uriArgs != null and  uriArgs != ''">
+			uri_args = #{uriArgs} ,
+		</if>
+		<if test="method != null and  method != ''">
+			method = #{method} ,
+		</if>
+		<if test="bodyData != null and  bodyData != ''">
+			body_data = #{bodyData} ,
+		</if>
+		<if test="responseData != null and  responseData != ''">
+			response_data = #{responseData} ,
+		</if>
+		<if test="createdBy != null">
+			created_by = #{createdBy} ,
+		</if>
+		<if test="createdTm != null">
+			created_tm = #{createdTm} ,
+		</if>
+		<if test="createdName != null and  createdName != ''">
+			created_name = #{createdName} ,
+		</if>
+		<if test="updatedBy != null">
+			updated_by = #{updatedBy} ,
+		</if>
+		<if test="updatedTm != null">
+			updated_tm = #{updatedTm} ,
+		</if>
+		<if test="updatedName != null and  updatedName != ''">
+			updated_name = #{updatedName} ,
+		</if>
+		<if test="isFlag != null">
+			is_flag = #{isFlag} ,
+		</if>
+        </trim>
+        WHERE 
+	        log_id = #{logId} 
+    </update>	
+	
+	<update id="deleteById" parameterType="java.lang.Long" >
+        UPDATE transcode_log SET
+	    is_flag = 0,
+        updated_by = #{updatedBy},
+        updated_name = #{updatedName},
+        updated_tm = #{updatedTm}
+        <where>
+		 log_id = #{id}
+		</where>
+    </update>	
+	
+	<update id="deleteByIds" parameterType="java.util.List" >
+        UPDATE transcode_log SET
+	    is_flag = 0,
+        updated_by = #{updatedBy},
+        updated_name = #{updatedName},
+        updated_tm = #{updatedTm}
+        WHERE  log_id IN
+		<foreach collection="ids" index="index" item="id" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+    </update>
+</mapper>
